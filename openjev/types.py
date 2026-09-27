@@ -65,8 +65,8 @@ class Question:
     type_name = "question"
     instructions: str
     criteria: Optional[Any] = None
-    # max option letters (Choice) / levels (Score); mirrors Jev limits
-    MAX_OPTIONS: int = 255
+    # local engine uses one-token A-Z labels, so Choice is capped at 26
+    MAX_OPTIONS: int = 26
     MAX_SCORE_LEVELS: int = 10
 
     def validate(self) -> None:
