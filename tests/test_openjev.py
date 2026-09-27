@@ -53,6 +53,19 @@ class TestValidation:
     def test_choice_accepts_two_options(self):
         Choice(instructions="pick", criteria={"a": "x", "b": "y"}).validate()
 
+    def test_choice_accepts_twenty_six_options(self):
+        Choice(
+            instructions="pick",
+            criteria={"option_%d" % i: "description_%d" % i for i in range(26)},
+        ).validate()
+
+    def test_choice_rejects_twenty_seven_options(self):
+        with pytest.raises(ValueError, match="at most 26 options"):
+            Choice(
+                instructions="pick",
+                criteria={"option_%d" % i: "description_%d" % i for i in range(27)},
+            ).validate()
+
     def test_score_rejects_one_level(self):
         with pytest.raises(ValueError):
             Score(instructions="rate", criteria=["only"]).validate()
